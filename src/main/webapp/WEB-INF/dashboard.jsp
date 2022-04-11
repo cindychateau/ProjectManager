@@ -32,7 +32,7 @@
 				<tbody>
 					<c:forEach var="p_o" items="${resto_proyectos}">
 						<tr>
-							<td>${p_o.getTitle()}</td>
+							<td><a href="/projects/${p_o.getId()}">${p_o.getTitle()}</a></td>
 							<td>${p_o.getUser().getFirst_name()}</td>
 							<td>${p_o.getDue_date() }</td>
 							<td>
@@ -57,7 +57,7 @@
 				<tbody>
 					<c:forEach var="p_m" items="${mis_proyectos}">
 						<tr>
-							<td>${p_m.getTitle()}</td>
+							<td><a href="/projects/${p_m.getId()}">${p_m.getTitle()}</a></td>
 							<td>${p_m.getUser().getFirst_name()}</td>
 							<td>${p_m.getDue_date()}</td>
 							<td>

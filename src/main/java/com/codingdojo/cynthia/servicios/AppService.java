@@ -119,4 +119,12 @@ public class AppService {
 		repositorio_user.save(thisUser);
 	}
 	
+	public void remove_project_user(Long user_id, Long project_id) {
+		Project thisProject = find_project(project_id);
+		User thisUser = find_user(user_id);
+		
+		thisUser.getProjects_joined().remove(thisProject);
+		repositorio_user.save(thisUser);
+	}
+	
 }

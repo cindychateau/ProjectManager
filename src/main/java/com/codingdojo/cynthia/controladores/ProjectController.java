@@ -118,5 +118,36 @@ public class ProjectController {
 		return "redirect:/dashboard";
 	}
 	
+	@GetMapping("/leave/{project_id}")
+	public String leave_project(@PathVariable("project_id") Long project_id, HttpSession session) {
+		/*REVISAMOS SESION*/
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
+		
+		if(currentUser == null) {
+			return "redirect:/";
+		}
+		/*REVISAMOS SESION*/
+		
+		servicio.remove_project_user(currentUser.getId(), project_id);
+		
+		return "redirect:/dashboard";
+	}
+	
+	@GetMapping("/{project_id}")
+	public String show_project(@PathVariable("project_id") Long project_id, HttpSession session, Model model) {
+		/*REVISAMOS SESION*/
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
+		
+		if(currentUser == null) {
+			return "redirect:/";
+		}
+		/*REVISAMOS SESION*/
+		
+		Project thisProject = servicio.find_project(project_id);
+		model.addAttribute("project", thisProject);
+		
+		return "show.jsp";		
+	}
+	
 	
 }
