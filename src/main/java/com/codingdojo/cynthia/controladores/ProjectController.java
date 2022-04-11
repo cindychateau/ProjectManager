@@ -41,7 +41,7 @@ public class ProjectController {
 								 BindingResult result,
 								 HttpSession session) {
 		/*REVISAMOS SESION*/
-		User currentUser = (User)session.getAttribute("user_session");
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
 		
 		if(currentUser == null) {
 			return "redirect:/";
@@ -53,7 +53,7 @@ public class ProjectController {
 		} else {
 			
 			Project nuevoProyecto = servicio.save_project(project);
-			User myUser = servicio.find_user(currentUser.getId());
+			User myUser = servicio.find_user(currentUser.getId()); //ID de usuario en sesión 
 			myUser.getProjects_joined().add(nuevoProyecto);
 			servicio.save_user(myUser);
 			

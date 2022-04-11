@@ -1,5 +1,7 @@
 package com.codingdojo.cynthia.controladores;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.codingdojo.cynthia.modelos.LoginUser;
+import com.codingdojo.cynthia.modelos.Project;
 import com.codingdojo.cynthia.modelos.User;
 import com.codingdojo.cynthia.servicios.AppService;
 
@@ -67,13 +70,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/dashboard")
-	public String dashboard(HttpSession session) {
+	public String dashboard(HttpSession session, Model model) {
 		//Revisan sessión
 		User currentUser = (User)session.getAttribute("user_session");
 		
 		if(currentUser == null) {
 			return "redirect:/";
 		}
+		
+		//Buscmaos las dos listas
+		List<Project> mis_proyectos = servicio.find_my_projects(currentUser);
+		List<Project> resto_proyectos = servicio.find_other_projects(currentUser);
+		
+		model.addAttribute("mis_proyectos", mis_proyectos);
+		model.addAttribute("resto_proyectos", resto_proyectos);
 
 		return "dashboard.jsp";
 	}

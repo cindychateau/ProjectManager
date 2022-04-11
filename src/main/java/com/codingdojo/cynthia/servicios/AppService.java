@@ -1,5 +1,6 @@
 package com.codingdojo.cynthia.servicios;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -100,6 +101,14 @@ public class AppService {
 		} else {
 			return null;
 		}
+	}
+	
+	public List<Project> find_my_projects(User myUser) {
+		return repositorio_proyectos.findAllByUsers(myUser);
+	}
+	
+	public List<Project> find_other_projects(User myUser){
+		return repositorio_proyectos.findByUsersNotContains(myUser);
 	}
 	
 	

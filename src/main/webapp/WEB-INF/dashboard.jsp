@@ -17,6 +17,66 @@
 			<a href="/projects/new" class="btn btn-primary">+ Nuevo Proyecto</a>
 			<a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
 		</nav>
+		
+		<div class="row">
+			<h2>Todos los Proyectos</h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Proyecto</th>
+						<th>Líder de Proyecto</th>
+						<th>Fecha Límite</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="p_o" items="${resto_proyectos}">
+						<tr>
+							<td>${p_o.getTitle()}</td>
+							<td>${p_o.getUser().getFirst_name()}</td>
+							<td>${p_o.getDue_date() }</td>
+							<td>
+								<a href="/projects/join/${p_o.getId()}" class="btn btn-warning">Unirse</a>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<h2>Mis Proyectos</h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Proyecto</th>
+						<th>Líder de Proyecto</th>
+						<th>Fecha Límite</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="p_m" items="${mis_proyectos}">
+						<tr>
+							<td>${p_m.getTitle()}</td>
+							<td>${p_m.getUser().getFirst_name()}</td>
+							<td>${p_m.getDue_date()}</td>
+							<td>
+								
+								<c:if test="${p_m.getUser().getId() == user_session.getId()}">
+									<a href="/projects/edit/${p_m.getId()}" class="btn btn-warning">Editar</a>
+								</c:if>
+								
+								<c:if test="${p_m.getUser().getId() != user_session.getId()}">
+									<a href="/projects/leave/${p_m.getId()}" class="btn btn-danger">Salir</a>
+								</c:if>
+								
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		
 	</div>
 
 </body>
