@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -147,6 +148,21 @@ public class ProjectController {
 		model.addAttribute("project", thisProject);
 		
 		return "show.jsp";		
+	}
+	
+	@DeleteMapping("/delete/{project_id}")
+	public String delete_project(@PathVariable("project_id") Long project_id, HttpSession session) {
+		/*REVISAMOS SESION*/
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
+		
+		if(currentUser == null) {
+			return "redirect:/";
+		}
+		/*REVISAMOS SESION*/
+		
+		servicio.delete_project(project_id);
+		
+		return "redirect:/dashboard";
 	}
 	
 	

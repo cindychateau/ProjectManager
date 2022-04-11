@@ -64,6 +64,12 @@
 								
 								<c:if test="${p_m.getUser().getId() == user_session.getId()}">
 									<a href="/projects/edit/${p_m.getId()}" class="btn btn-warning">Editar</a>
+									
+									<form action="/projects/delete/${p_m.getId()}" method="post">
+										<input type="hidden" name="_method" value="DELETE">
+										<button type="submit" class="btn btn-danger">Eliminar</button>
+									</form>
+									
 								</c:if>
 								
 								<c:if test="${p_m.getUser().getId() != user_session.getId()}">

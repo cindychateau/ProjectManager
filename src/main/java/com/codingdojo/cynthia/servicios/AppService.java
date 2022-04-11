@@ -127,4 +127,8 @@ public class AppService {
 		repositorio_user.save(thisUser);
 	}
 	
+	public void delete_project(Long id) {
+		repositorio_proyectos.deleteById(id);
+	}
+	
 }
