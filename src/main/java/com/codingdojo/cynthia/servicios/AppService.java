@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import com.codingdojo.cynthia.modelos.LoginUser;
+import com.codingdojo.cynthia.modelos.Project;
 import com.codingdojo.cynthia.modelos.User;
+import com.codingdojo.cynthia.repositorios.ProjectRepository;
 import com.codingdojo.cynthia.repositorios.UserRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class AppService {
 	
 	@Autowired
 	private UserRepository repositorio_user;
+	
+	@Autowired 
+	private ProjectRepository repositorio_proyectos;
 	
 	public User register(User nuevoUsuario, BindingResult result) {
 		
@@ -70,5 +75,33 @@ public class AppService {
 		
 		
 	}
+	
+	public User save_user(User updatedUser) {
+		return repositorio_user.save(updatedUser);
+	}
+	
+	public User find_user(Long id) {
+		Optional<User> optionalUser = repositorio_user.findById(id);
+		if(optionalUser.isPresent()) {
+			return optionalUser.get();
+		} else {
+			return null;
+		}
+	}
+	
+	public Project save_project(Project nuevoProyecto) {
+		return repositorio_proyectos.save(nuevoProyecto);
+	}
+	
+	public Project find_project(Long id) {
+		Optional<Project> optionalProject = repositorio_proyectos.findById(id);
+		if(optionalProject.isPresent()) {
+			return optionalProject.get();
+		} else {
+			return null;
+		}
+	}
+	
+	
 	
 }
