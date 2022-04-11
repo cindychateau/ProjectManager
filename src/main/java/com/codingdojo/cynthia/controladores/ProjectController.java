@@ -5,10 +5,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codingdojo.cynthia.modelos.Project;
@@ -62,6 +65,40 @@ public class ProjectController {
 		}
 	}
 	
+	@GetMapping("/edit/{id}")
+	public String edit_project(@PathVariable("id") Long id,
+							   @ModelAttribute("project") Project project,
+							   HttpSession session,
+							   Model model) {
+		/*REVISAMOS SESION*/
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
+		
+		if(currentUser == null) {
+			return "redirect:/";
+		}
+		/*REVISAMOS SESION*/
+		
+		Project project_edit = servicio.find_project(id);
+		model.addAttribute("project", project_edit);
+		
+		return "edit.jsp";
+	}
+	
+	@PutMapping("/update")
+	public String update_project(@Valid @ModelAttribute("project") Project projectFormulario,
+								 BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "edit.jsp";
+		} else {
+			Project thisProject = servicio.find_project( projectFormulario.getId() );
+			projectFormulario.setUsers(thisProject.getUsers());
+			servicio.save_project(projectFormulario);
+			
+			return "redirect:/dashboard";
+		}
+		
+	}
 	
 	
 }
