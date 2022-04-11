@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -38,7 +38,7 @@ public class Project {
 	@Size(min=5, max=255, message="titulo debe de tener entre 5 y 255 caracteres")
 	private String description;
 	
-	@Future
+	@FutureOrPresent
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date due_date;
 	

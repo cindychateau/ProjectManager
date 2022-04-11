@@ -58,7 +58,8 @@ public class ProjectController {
 			return "new.jsp";
 		} else {
 			
-			Project nuevoProyecto = servicio.save_project(project);
+			Project nuevoProyecto = servicio.save_project(project);//Guardando el proyecto
+			
 			User myUser = servicio.find_user(currentUser.getId()); //ID de usuario en sesión 
 			myUser.getProjects_joined().add(nuevoProyecto);
 			servicio.save_user(myUser);
