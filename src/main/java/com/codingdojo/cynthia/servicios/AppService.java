@@ -111,6 +111,12 @@ public class AppService {
 		return repositorio_proyectos.findByUsersNotContains(myUser);
 	}
 	
-	
+	public void save_project_user(Long user_id, Long project_id) {
+		Project thisProject = find_project(project_id);
+		User thisUser = find_user(user_id);
+		
+		thisUser.getProjects_joined().add(thisProject);
+		repositorio_user.save(thisUser);
+	}
 	
 }

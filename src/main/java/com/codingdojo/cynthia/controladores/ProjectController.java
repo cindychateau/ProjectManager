@@ -26,6 +26,7 @@ public class ProjectController {
 	private AppService servicio;
 	
 	@GetMapping("/new")
+	//@RequestMapping(value="/new", method=RequestMethod.GET)
 	public String new_project(@ModelAttribute("project") Project project, HttpSession session) {
 		/*REVISAMOS SESION*/
 		User currentUser = (User)session.getAttribute("user_session");
@@ -40,6 +41,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/create")
+	//@RequestMapping(value="/create", method=RequestMethod.POST)
 	public String create_project(@Valid @ModelAttribute("project") Project project, 
 								 BindingResult result,
 								 HttpSession session) {
@@ -85,6 +87,7 @@ public class ProjectController {
 	}
 	
 	@PutMapping("/update")
+	//@RequestMapping(value="/update", method=RequestMethod.PUT)
 	public String update_project(@Valid @ModelAttribute("project") Project projectFormulario,
 								 BindingResult result) {
 		
@@ -98,6 +101,21 @@ public class ProjectController {
 			return "redirect:/dashboard";
 		}
 		
+	}
+	
+	@GetMapping("/join/{project_id}")
+	public String join_project(@PathVariable("project_id") Long project_id, HttpSession session) {
+		/*REVISAMOS SESION*/
+		User currentUser = (User)session.getAttribute("user_session"); //Usuario en sesión
+		
+		if(currentUser == null) {
+			return "redirect:/";
+		}
+		/*REVISAMOS SESION*/
+		
+		servicio.save_project_user(currentUser.getId(), project_id);
+		
+		return "redirect:/dashboard";
 	}
 	
 	
